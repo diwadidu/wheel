@@ -6,6 +6,11 @@
 
 
     <style>
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+        }
+
         .wheel img {
             -webkit-transition: 1s;
         }
@@ -21,7 +26,18 @@
             border: 1px solid #444;
             margin-right: 3px;
             text-align: center;
+            background: #fff;
 
+        }
+
+        li.picked {
+            color: #ccc;
+            cursor: default;
+        }
+
+        li.no-exist {
+            color: #faa;
+            cursor: default;
         }
 
         li {
@@ -30,31 +46,89 @@
             border: 1px solid #444;
             padding: 5px;
             list-style: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 21px;
+            width: 20px;
         }
 
+        .category {
+            clear: both;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 20px;
+            background: #777;
+            color: #fff;
+            position: relative;
+            top: 10px;
+        }
+
+        .play-container {
+            background: #eee;
+            border-radius: 4px;
+        }
+
+        .play-container > div {
+            clear: both;
+            margin-bottom: 20px;
+        }
+
+        .solve-container {
+            padding-top: 20px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .scoreboard {
+            width: 100%;
+            text-align: center;
+            background: #222;
+            color: #fff;
+            font-size: 20px;
+            padding: 15px 0;
+            margin-bottom: 20px;
+        }
+
+        #spin-wheel {
+            clear: both;
+            margin-top: 20px;
+            padding: 8px 20px;
+        }
+
+        #action {
+        }
 
     </style>
     <script src="main.js"></script>
 
 </head>
 <body>
-<div id="current-score"></div>
+<div class="scoreboard">
+    <div style="float:left;padding-left: 15px;">
+        Action:<span id="action"></span>
+    </div>
+    Score: <span id="current-score">0</span>
+</div>
 
 <div class="wheel" style="float:left;margin-right:20px;">
     <img src="images/Wheel_Gaphic_small.png" id="wheel"/>
     <button id="spin-wheel">Spin</button>
 </div>
 
-<div style="width: 400px;float:left;">
+<div style="width: 400px;float:left;background: #eee;padding:20px;text-align: center;"
+     class="play-container">
     <div id="play-area" style="clear:both">
 
     </div>
+    <div id="category" class="category"></div>
+
     <div class="alhabet" style="clear: both;">
         <ul id="alphabet"></ul>
     </div>
 
-    <div style="clear:both">
-        <input type="text" id="solve-box" name="solution" />
+    <div style="clear:both" class="solve-container">
+        <input type="text" id="solve-box" name="solution"/>
         <button id="solve-submit">Solve</button>
     </div>
 </div>

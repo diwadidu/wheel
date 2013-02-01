@@ -15,6 +15,7 @@ var Game = {
     init:function () {
         document.getElementById('spin-wheel').addEventListener('click', this.onSpin.bind(this));
         this.renderPuzzle();
+        this.setAction('spin');
         document.getElementById('solve-submit').addEventListener('click', this.onSolve.bind(this));
     },
 
@@ -27,17 +28,17 @@ var Game = {
             idx = Math.floor(newRot / (360 / this.values.length)),
             point = this.values[idx];
 
-
-        console.log(idx, point);
-
         document.getElementById('wheel').setAttribute('style', '-webkit-transform: rotate(-' + (newRot + 7 * 360) + 'deg)')
 
         if (point < 1) {
             this.addPoints(point);
+            this.setAction('Spin');
+
         }
         else {
             this.currentWheelPoints = point;
             this.allowSpin = false;
+            this.setAction('Pick Letter');
         }
     },
 
@@ -45,8 +46,11 @@ var Game = {
     renderPuzzle:function () {
 
         var tbl, tr, td, div,
-            puzzle = puzzles[0],
+            pnum = Math.floor((Math.random() * puzzles.length)),
+            puzzle = puzzles[pnum],
             words = puzzle.content.split(' ');
+
+        document.getElementById('category').innerHTML = puzzle.cat;
 
         div = document.createElement('DIV');
         div.setAttribute('id', 'play-area');
@@ -79,7 +83,7 @@ var Game = {
         }
 
         ul.addEventListener('click', this.onLetterClick.bind(this));
-
+        this.setAction('spin');
 
     },
 
@@ -102,13 +106,15 @@ var Game = {
             for (i = 0; i < l; i++) {
                 tdList[pos[i]].innerHTML = letter;
             }
+            e.target.setAttribute('class', 'picked');
 
             this.addPoints(l * this.currentWheelPoints);
         }
+        else {
+            e.target.setAttribute('class', 'no-exist');
+        }
         this.allowSpin = true;
-
-        console.log(this.score);
-
+        this.setAction('spin');
     },
 
 
@@ -146,24 +152,44 @@ var Game = {
         var attempt = document.getElementById('solve-box').value;
 
         if (attempt.toUpperCase().replace(/\s/g, '') == this.current) {
-            console.log('solved');
+            document.getElementsByTagName('body')[0].style.background = '#0f0';
         }
         else {
-            console.log('fail');
             document.getElementById('solve-box').value = '';
-            this.addPoints(0);
+            document.getElementsByTagName('body')[0].style.background = '#f00';
 
+            setTimeout(function() {
+                document.getElementsByTagName('body')[0].style.background = 'transparent';
+            }, 2000);
+
+            this.addPoints(0);
         }
 
+    },
+
+    setAction: function(what) {
+        document.getElementById('action').innerHTML = what;
     }
 
-}
+};
 
 
 var puzzles = [
     {
         cat:'before and after',
         content:'Having a ball and chain'
+    },
+    {
+        cat: 'person',
+        content: 'Abraham Lincoln'
+    },
+    {
+        cat: 'thing',
+        content: 'super fast macintosh'
+    },
+    {
+        cat: 'thing',
+        content: 'broken can opener'
     }
 
 ]
