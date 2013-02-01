@@ -15,9 +15,30 @@ var Game = {
     init:function () {
         document.getElementById('spin-wheel').addEventListener('click', this.onSpin.bind(this));
         this.renderPuzzle();
+        this.renderAlphabet();
         this.setAction('spin');
         document.getElementById('solve-submit').addEventListener('click', this.onSolve.bind(this));
+        document.getElementById('reset').addEventListener('click', this.reset.bind(this));
     },
+
+
+    reset: function() {
+        document.getElementById('play-area').innerHTML = '';
+        this.renderPuzzle();
+        this.setAction('spin');
+        this.currentWheelPoints = 0;
+        this.score = 0;
+        this.allowSpin = true;
+        this.addPoints(0);
+        document.getElementsByTagName('body')[0].style.background = 'transparent';
+        document.getElementById('solve-box').value = '';
+        var liList = document.getElementsByTagName('li');
+
+        for (var i=0; i < liList.length; i++) {
+            liList[i].removeAttribute('class');
+        }
+    },
+
 
 
     onSpin:function (e) {
@@ -70,7 +91,9 @@ var Game = {
             .replaceChild(div, document.getElementById('play-area'));
 
         this.current = puzzle.content.toUpperCase().replace(/\s/g, '');
+    },
 
+    renderAlphabet: function() {
 
         // Render the alphabet;
         var i, li, alpha = "ABCDEFGHIJKLMNOPQRSTUVXYWZ".split(''),
@@ -84,7 +107,6 @@ var Game = {
 
         ul.addEventListener('click', this.onLetterClick.bind(this));
         this.setAction('spin');
-
     },
 
 
