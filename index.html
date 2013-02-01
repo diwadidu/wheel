@@ -7,7 +7,7 @@
 
     <style>
         .wheel img {
-            -webkit-transition: 5s;
+            -webkit-transition: 1s;
         }
 
         table {
@@ -38,6 +38,8 @@
 
 </head>
 <body>
+<div id="current-score"></div>
+
 <div class="wheel" style="float:left;margin-right:20px;">
     <img src="images/Wheel_Gaphic_small.png" id="wheel"/>
     <button id="spin-wheel">Spin</button>
@@ -51,6 +53,10 @@
         <ul id="alphabet"></ul>
     </div>
 
+    <div style="clear:both">
+        <input type="text" id="solve-box" name="solution" />
+        <button id="solve-submit">Solve</button>
+    </div>
 </div>
 <script type="text/javascript">
     Game.init();
