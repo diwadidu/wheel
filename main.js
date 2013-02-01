@@ -33,10 +33,10 @@ var Game = {
         if (point < 1) {
             this.addPoints(point);
             this.setAction('Spin');
-
         }
         else {
             this.currentWheelPoints = point;
+            document.getElementById('wheelpoints').innerHTML = point;
             this.allowSpin = false;
             this.setAction('Pick Letter');
         }
@@ -153,6 +153,12 @@ var Game = {
 
         if (attempt.toUpperCase().replace(/\s/g, '') == this.current) {
             document.getElementsByTagName('body')[0].style.background = '#0f0';
+
+            var numChar = this.current.length;
+            var tdList = document.getElementsByTagName('td');
+            for (var i=0; i < numChar; i++) {
+                tdList[i].innerHTML = this.current.substr(i,1);
+            }
         }
         else {
             document.getElementById('solve-box').value = '';
