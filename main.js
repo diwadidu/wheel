@@ -24,13 +24,21 @@ var Game = {
         if (!this.allowSpin) return;
 
         var newRot = Math.floor(Math.random() * 360),
-            idx = Math.floor(newRot / this.values.length),
+            idx = Math.floor(newRot / (360 / this.values.length)),
             point = this.values[idx];
+
+
+        console.log(idx, point);
 
         document.getElementById('wheel').setAttribute('style', '-webkit-transform: rotate(-' + (newRot + 7 * 360) + 'deg)')
 
-        this.currentWheelPoints = point;
-        this.allowSpin = false;
+        if (point < 1) {
+            this.addPoints(point);
+        }
+        else {
+            this.currentWheelPoints = point;
+            this.allowSpin = false;
+        }
     },
 
 
